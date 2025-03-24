@@ -13,10 +13,17 @@ let package = Package(
             targets: ["SUIKit"]),
     ],
     dependencies: [
+        .package(
+            name: "Lottie",
+            url: "https://github.com/airbnb/lottie-ios.git",
+            .upToNextMajor(from: "4.4.0")
+        )
     ],
     targets: [
         .target(
             name: "SUIKit",
-            dependencies: [])
+            dependencies: [
+            "Lottie",
+            ])
     ]
 )
