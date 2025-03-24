@@ -7,19 +7,34 @@
 
 import SwiftUI
 
-struct TabBottomView: View {
+public struct TabBottomView: View {
     
-    let tabbarItems: [String]
-    var height: CGFloat = 70
-    var width: CGFloat = UIScreen.main.bounds.width - 32
-    var action: (() -> Void)? = nil
-    @Binding var selectedIndex: Int
+    private let tabbarItems: [String]
+    private var height: CGFloat = 70
+    private var width: CGFloat = UIScreen.main.bounds.width - 32
+    @Binding private var selectedIndex: Int
     
-    var tabIndices: Range<Int> {
+    private var action: (() -> Void)? = nil
+    
+    private var tabIndices: Range<Int> {
         return 0..<tabbarItems.count
     }
     
-    var body: some View {
+    public init(
+        tabbarItems: [String],
+        height: CGFloat = 70,
+        width: CGFloat = UIScreen.main.bounds.width - 32,
+        selectedIndex: Binding<Int>,
+        action: (() -> Void)? = nil
+    ) {
+        self.tabbarItems = tabbarItems
+        self.height = height
+        self.width = width
+        self._selectedIndex = selectedIndex
+        self.action = action
+    }
+    
+    public var body: some View {
         HStack {
             Spacer()
             

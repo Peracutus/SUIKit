@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CustomAlert: View {
+public struct CustomAlert: View {
 
     // MARK: - Properties
     // MARK: Public
@@ -19,11 +19,21 @@ struct CustomAlert: View {
     @State private var opacity: CGFloat           = 0
     @State private var backgroundOpacity: CGFloat = 0
     @State private var scale: CGFloat             = 0.001
+    
+    public init(
+        title: String,
+        message: String,
+        dismissButton: CustomAlertButton?
+    ) {
+        self.title = title
+        self.message = message
+        self.dismissButton = dismissButton
+    }
 
     @Environment(\.dismiss) private var dismiss
 
     // MARK: - View
-    var body: some View {
+    public var body: some View {
         ZStack {
             dimView
     

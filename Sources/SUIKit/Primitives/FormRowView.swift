@@ -7,17 +7,28 @@
 
 import SwiftUI
 
-struct FormRowView: View {
+public struct FormRowView: View {
     
     //MARK: - Properties
-    @Binding var isActive: Bool
-    
     var icon: String
     var text: String
-    var isSwitcher: Bool = false
+    private var isSwitcher: Bool = false
+    @Binding var isActive: Bool
     let completion: () -> Void
     
-    var body: some View {
+    public init(
+        icon: String,
+        text: String,
+        isActive: Binding<Bool>,
+        completion: @escaping () -> Void
+    ) {
+        self.icon = icon
+        self.text = text
+        self._isActive = isActive
+        self.completion = completion
+    }
+    
+    public var body: some View {
         HStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -58,13 +69,13 @@ struct FormRowLinkView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        FormRowView(isActive: $value, icon: "globe", text: "Website", completion: {
+        FormRowView(icon: "globe", text: "Website", isActive: $value, completion: {
             print("123")
         })
             .previewLayout(.fixed(width: 375, height: 60))
             .padding()
         
-        FormRowView(isActive: $value, icon: "globe", text: "Website", isSwitcher: true, completion: {
+        FormRowView(icon: "globe", text: "Website", isActive: $value, completion: {
             print("123")
         })
             .previewLayout(.fixed(width: 375, height: 60))

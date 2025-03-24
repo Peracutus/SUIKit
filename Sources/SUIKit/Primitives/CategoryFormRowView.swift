@@ -7,18 +7,34 @@
 
 import SwiftUI
 
-struct CategoryFormRowView: View {
+public struct CategoryFormRowView: View {
     
     //MARK: - Properties
-    var title: String
-    var count: String
-    var transaction: String
-    var percent: String
-    var image: String
-    var color: Color
+    private let title: String
+    private let count: String
+    private let transaction: String
+    private let percent: String
+    private let image: String
+    private let color: Color
+    
+    public init(
+        title: String,
+        count: String,
+        transaction: String,
+        percent: String,
+        image: String,
+        color: Color
+    ) {
+        self.title = title
+        self.count = count
+        self.transaction = transaction
+        self.percent = percent
+        self.image = image
+        self.color = color
+    }
     
     //MARK: - Body
-    var body: some View {
+    public var body: some View {
         ZStack {
             
             HStack(alignment: .center, spacing: 5) {

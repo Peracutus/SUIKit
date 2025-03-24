@@ -7,13 +7,19 @@
 
 import SwiftUI
 
-struct PasswordField: View {
+public struct PasswordField: View {
     
-    let title: String
-    @Binding var text: String
+    private let title: String
+    @Binding private var text: String
     @State private var isSecured = true
     
-    var body: some View {
+    public init(title: String, text: Binding<String>, isSecured: Bool = true) {
+        self.title = title
+        self._text = text
+        self.isSecured = isSecured
+    }
+    
+    public var body: some View {
         HStack(spacing: 15) {
             Group {
                 if isSecured {

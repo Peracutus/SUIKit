@@ -7,12 +7,17 @@
 
 import SwiftUI
 
-struct CustomAlertButton: View {
+public struct CustomAlertButton: View {
 
     let title: LocalizedStringKey
     var action: (() -> Void)? = nil
     
-    var body: some View {
+    public init(title: LocalizedStringKey, action: (() -> Void)? = nil) {
+        self.title = title
+        self.action = action
+    }
+    
+    public var body: some View {
         Button {
           action?()
         
@@ -34,8 +39,10 @@ struct CustomAlertButton_Previews: PreviewProvider {
     }
 }
 
-struct GrowingButton: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
+public struct GrowingButton: ButtonStyle {
+    
+    public init() {}
+    public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .background(configuration.isPressed ? Color.semiBlack : Color.skyBlue)
             .cornerRadius(10)
