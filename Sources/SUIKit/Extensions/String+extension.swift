@@ -7,7 +7,7 @@
 
 public extension String {
     
-    public enum CategoryImage: String, CaseIterable {
+    enum CategoryImage: String, CaseIterable {
         case Airplane
         case Babys
         case Banking
@@ -63,7 +63,7 @@ public extension String {
     }
     
     /// CategoryColors
-    public enum CategoryColors: String {
+    enum CategoryColors: String {
         case CatBlue = "#0432FF"
         case CatRed = "#FF2600"
         case CatGreen = "#00F900"

@@ -7,8 +7,19 @@
 
 import SwiftUI
 
+public enum SettingsImage: String {
+    case globe, currency, cats, noti, key, terms, faceid, info, feedback
+    
+    public var getImage: Image {
+        switch self {
+        case .globe, .currency, .cats, .noti, .key, .terms, .faceid, .info, .feedback:
+            return Image(rawValue, bundle: .module)
+        }
+    }
+}
+
 public extension Image {
-   public func setupCategoryImageModifier(_ color: Color) -> some View {
+    func setupCategoryImageModifier(_ color: Color) -> some View {
         self
             .resizable()
             .frame(width: 24, height: 24)
@@ -19,4 +30,6 @@ public extension Image {
                     .frame(width: 40, height: 40)
             }
     }
+    
+ 
 }

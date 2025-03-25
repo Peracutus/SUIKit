@@ -24,7 +24,7 @@ struct TabItemView: View {
                     .background(Color.skyBlue)
                     .cornerRadius(30)
             } else {
-                Image(image).renderingMode(.template)
+                Image(image, bundle: .module).renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 32, height: 32)

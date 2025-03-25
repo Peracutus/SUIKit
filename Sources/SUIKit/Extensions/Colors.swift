@@ -46,10 +46,10 @@ public extension Color {
 
 /// allow to extract hex color
     
-    static let pinky = Color("PinkColor")
-    static let skyBlue = Color("SkyBlue")
-    static let lightGreen = Color("LightGreen")
-    static let redColor = Color("RedColor")
+    static let pinky = Color("PinkColor", bundle: .module)
+    static let skyBlue = Color("SkyBlue", bundle: .module)
+    static let lightGreen = Color("LightGreen", bundle: .module)
+    static let redColor = Color("RedColor", bundle: .module)
     static let semiBlack = Color.black.opacity(0.7)
     
     static let catBlue = Color.skyBlue.opacity(0.6)
