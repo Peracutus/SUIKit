@@ -5,7 +5,7 @@
 //  Created by Роман Рунов on 24.03.2025.
 //
 
-extension String {
+public extension String {
     
     public enum CategoryImage: String, CaseIterable {
         case Airplane

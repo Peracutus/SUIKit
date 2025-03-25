@@ -7,13 +7,17 @@
 
 import SwiftUI
 import Lottie
+
+public enum LottieFile: String {
+    case Logo, Wallet
+}
  
 public struct LottieView: UIViewRepresentable {
     
-    let lottieFile: String
+    private let lottieFile: String
     
-    public init(lottieFile: String) {
-        self.lottieFile = lottieFile
+    public init(lottieFile: LottieFile) {
+        self.lottieFile = lottieFile.rawValue
     }
  
     private let animationView = LottieAnimationView()

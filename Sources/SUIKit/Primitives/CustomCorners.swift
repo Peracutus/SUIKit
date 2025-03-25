@@ -9,8 +9,8 @@ import SwiftUI
 
 public struct CustomCorners: Shape {
     
-    var corners: UIRectCorner
-    var radius: CGFloat
+    private var corners: UIRectCorner
+    private var radius: CGFloat
     
     public init(corners: UIRectCorner, radius: CGFloat) {
         self.corners = corners

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-extension Image {
-    func setupCategoryImageModifier(_ color: Color) -> some View {
+public extension Image {
+   public func setupCategoryImageModifier(_ color: Color) -> some View {
         self
             .resizable()
             .frame(width: 24, height: 24)
