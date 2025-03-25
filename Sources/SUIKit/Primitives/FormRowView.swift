@@ -10,14 +10,14 @@ import SwiftUI
 public struct FormRowView: View {
     
     //MARK: - Properties
-    var icon: String
+    var icon: SettingsImage
     var text: String
     private var isSwitcher: Bool = false
     @Binding var isActive: Bool
     let completion: () -> Void
     
     public init(
-        icon: String,
+        icon: SettingsImage,
         text: String,
         isActive: Binding<Bool>,
         completion: @escaping () -> Void
@@ -33,7 +33,8 @@ public struct FormRowView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(.white)
-                Image(icon)
+                icon
+                    .getImage
                     .resizable()
                     .frame(width: 24, height: 24)
                     .foregroundColor(Color.skyBlue)
@@ -69,13 +70,13 @@ struct FormRowLinkView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        FormRowView(icon: "globe", text: "Website", isActive: $value, completion: {
+        FormRowView(icon: .globe, text: "Website", isActive: $value, completion: {
             print("123")
         })
             .previewLayout(.fixed(width: 375, height: 60))
             .padding()
         
-        FormRowView(icon: "globe", text: "Website", isActive: $value, completion: {
+        FormRowView(icon: .globe, text: "Website", isActive: $value, completion: {
             print("123")
         })
             .previewLayout(.fixed(width: 375, height: 60))

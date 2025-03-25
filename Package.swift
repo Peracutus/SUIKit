@@ -14,7 +14,6 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            name: "Lottie",
             url: "https://github.com/airbnb/lottie-ios.git",
             .upToNextMajor(from: "4.4.0")
         )
@@ -23,7 +22,10 @@ let package = Package(
         .target(
             name: "SUIKit",
             dependencies: [
-            "Lottie",
+                .product(name: "Lottie", package: "lottie-ios"),
+            ],
+            resources: [
+                .process("Resources/")
             ])
     ]
 )

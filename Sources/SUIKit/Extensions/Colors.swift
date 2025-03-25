@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: -  hex color transformation
 
-extension Color {
+public extension Color {
     init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
@@ -43,10 +43,28 @@ extension Color {
 
         self.init(red: r, green: g, blue: b, opacity: a)
     }
-}
 
 /// allow to extract hex color
-extension Color {
+    
+    static let pinky = Color("PinkColor", bundle: .module)
+    static let skyBlue = Color("SkyBlue", bundle: .module)
+    static let lightGreen = Color("LightGreen", bundle: .module)
+    static let redColor = Color("RedColor", bundle: .module)
+    static let semiBlack = Color.black.opacity(0.7)
+    
+    static let catBlue = Color.skyBlue.opacity(0.6)
+//    static let superBlue = Color.blue
+    static let catRed = Color.red.opacity(0.6)
+    static let catGreen = Color.green.opacity(0.6)
+    static let catYellow = Color.yellow.opacity(0.6)
+    static let catOrange = Color.orange.opacity(0.6)
+    static let catMint = Color.mint.opacity(0.6)
+    static let catCyan = Color.cyan.opacity(0.6)
+    static let catIndigo = Color.indigo.opacity(0.6)
+    static let catPurple = Color.purple.opacity(0.6)
+    static let catBrown = Color.brown.opacity(0.6)
+    static let catTeal = Color.teal.opacity(0.6)
+    
     func toHex() -> String? {
         let uic = UIColor(self)
         guard let components = uic.cgColor.components, components.count >= 3 else {
@@ -67,27 +85,4 @@ extension Color {
             return String(format: "%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))
         }
     }
-}
-
-
-extension Color {
-    static let pinky = Color("PinkColor")
-    static let skyBlue = Color("SkyBlue")
-    static let lightGreen = Color("LightGreen")
-    static let redColor = Color("RedColor")
-    static let semiBlack = Color.black.opacity(0.7)
-    
-    static let catBlue = Color.skyBlue.opacity(0.6)
-//    static let superBlue = Color.blue
-    static let catRed = Color.red.opacity(0.6)
-    static let catGreen = Color.green.opacity(0.6)
-    static let catYellow = Color.yellow.opacity(0.6)
-    static let catOrange = Color.orange.opacity(0.6)
-    static let catMint = Color.mint.opacity(0.6)
-    static let catCyan = Color.cyan.opacity(0.6)
-    static let catIndigo = Color.indigo.opacity(0.6)
-    static let catPurple = Color.purple.opacity(0.6)
-    static let catBrown = Color.brown.opacity(0.6)
-    static let catTeal = Color.teal.opacity(0.6)
-    
 }
