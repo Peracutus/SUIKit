@@ -73,10 +73,11 @@ public enum CategoryImage: String, CaseIterable {
     case Visa
     
     public var getImage: Image {
-        switch self {
-        case.Airplane,.Babys,.Banking,.Barbershop,.Beach,.Beer,.Bicycle,.CarRental,.Cars,.Children,.Clinic,.Clothes,.Cocktail,.CoffeeToGo,.Controller,.CookingPot,.CreditCard,.Documentary,.Exterior,.FoodOut,.GasStation,.Gift,.Grapes,.Grocery,.Hanger,.Hearts,.Hotels,.Iphone,.Jewelry,.Jym,.Kitchenwares,.Laptop,.Literature,.LivingRoom,.Mastercard,.MoneyTransfer,.Music,.Puzzle,.Restaurant,.Sale,.ShoppingBag,.ShoppingCartLoaded,.SimCard,.SmartphoneTablet,.Taxi,.TheatreMask,.Ticket,.Tomato,.Transport,.Travel,.Truck,.Visa:
-            return Image(rawValue, bundle: .module)
-        }
+        return Image(self.rawValue, bundle: .module)
+    }
+    
+   public static func getImage(from string: String?) -> Image? {
+       return CategoryImage(rawValue: string ?? "")?.getImage
     }
 }
 
