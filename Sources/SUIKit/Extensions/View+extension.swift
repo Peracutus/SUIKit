@@ -50,28 +50,35 @@ public extension View {
     }
     
     @available(iOS 16.4, *)
-    @ViewBuilder
     func systemTrayView<Content: View>(
         _ show: Binding<Bool>,
         config: TrayConfig = .init(),
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
+        self.sheet(isPresented: show) {
+            VStack(spacing: 0) {
+                content()
+            }
+            .background(
+                RoundedRectangle(cornerRadius: config.cornerRadius, style: .continuous)
+                    .fill(Color(uiColor: .systemBackground))
+                    .ignoresSafeArea(edges: .bottom)
+            )
+            .presentationDetents([config.maxDetent])
+            .presentationCornerRadius(config.cornerRadius)
+            .presentationDragIndicator(.hidden)
+            .interactiveDismissDisabled(config.isInteractiveDismissDisabled)
+        }
+    }
+    
+    /// Добавляет отступ снизу для таббара (safeArea)
+    /// Высота таббара: 100pt по умолчанию
+    func tabBarSafeArea(height: CGFloat = 100) -> some View {
         self
-            .sheet(isPresented: show) {
-                VStack(spacing: 0) {
-                    content()
-                        .padding(config.contentInsets)
-                }
-                .background(
-                    RoundedRectangle(cornerRadius: config.cornerRadius, style: .continuous)
-                        .fill(Color(.systemBackground))
-                        .ignoresSafeArea(edges: .bottom)
-                )
-                .presentationDetents([config.maxDetent])
-                .presentationCornerRadius(config.cornerRadius)
-                .presentationBackground(.clear)
-                .presentationDragIndicator(.hidden)
-                .interactiveDismissDisabled(config.isInteractiveDismissDisabled)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                // Прозрачный отступ для таббара
+                Color.clear
+                    .frame(height: height)
             }
     }
 }
