@@ -10,21 +10,23 @@ import SwiftUI
 public struct FormRowView: View {
     
     //MARK: - Properties
-    var icon: SettingsImage
-    var text: String
+    private let icon: SettingsImage
+    private let text: String
     private var isSwitcher: Bool = false
-    @Binding var isActive: Bool
+    @Binding private var isActive: Bool
     let completion: () -> Void
     
     public init(
         icon: SettingsImage,
         text: String,
         isActive: Binding<Bool>,
+        isSwitcher: Bool = false,
         completion: @escaping () -> Void
     ) {
         self.icon = icon
         self.text = text
         self._isActive = isActive
+        self.isSwitcher = isSwitcher
         self.completion = completion
     }
     
@@ -41,7 +43,7 @@ public struct FormRowView: View {
                 
             }
             .frame(width: 36, height: 36, alignment: .center)
-            .shadow(radius: 0.05)
+            .shadow(radius: 0.15)
             
             if isSwitcher {
                 Toggle(isOn: $isActive) {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TabBottomView: View {
+struct TabBottomView: View {
     
     private let tabbarItems: [String]
     private var height: CGFloat = 50
