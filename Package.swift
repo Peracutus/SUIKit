@@ -1,11 +1,11 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "SUIKit",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -16,6 +16,10 @@ let package = Package(
         .package(
             url: "https://github.com/airbnb/lottie-ios.git",
             .upToNextMajor(from: "4.4.0")
+        ),
+        .package(
+            url: "https://github.com/aheze/SwipeActions.git",
+            .upToNextMajor(from: "1.0.0")
         )
     ],
     targets: [
@@ -23,6 +27,7 @@ let package = Package(
             name: "SUIKit",
             dependencies: [
                 .product(name: "Lottie", package: "lottie-ios"),
+                .product(name: "SwipeActions", package: "SwipeActions"),
             ],
             resources: [
                 .process("Resources/")

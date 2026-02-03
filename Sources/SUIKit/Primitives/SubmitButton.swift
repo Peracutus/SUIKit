@@ -29,7 +29,7 @@ public struct SubmitButton: View {
                 .font(.system(size: 17, weight: .semibold))
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
-                .frame(height: 56)
+                .frame(height: 50)
                 .background(backgroundColor)
                 .cornerRadius(60)
         }
