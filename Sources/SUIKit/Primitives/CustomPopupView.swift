@@ -37,6 +37,8 @@ public struct CustomPopup<PopupContent>: ViewModifier where PopupContent: View {
     public enum ViewPosition {
         case top
         case center
+        /// Низ попапа фиксирован по центру экрана; при росте контента попап растёт вверх.
+        case centerAnchoredBottom
         case bottom
 
         var isTop: Bool {
@@ -51,8 +53,12 @@ public struct CustomPopup<PopupContent>: ViewModifier where PopupContent: View {
             [.bottom].contains(self)
         }
 
+        var isCenterAnchoredBottom: Bool {
+            [.centerAnchoredBottom].contains(self)
+        }
+
         var isHorizontalCenter: Bool {
-            [.top, .center, .bottom].contains(self)
+            [.top, .center, .centerAnchoredBottom, .bottom].contains(self)
         }
     }
 
@@ -60,12 +66,24 @@ public struct CustomPopup<PopupContent>: ViewModifier where PopupContent: View {
 
     @State private var presenterContentRect: CGRect = .zero
     @State private var sheetContentRect: CGRect = .zero
+    /// Высота попапа при открытии; для centerAnchoredBottom низ остаётся на этой позиции при росте.
+    @State private var centerAnchoredInitialHeight: CGFloat = 0
 
     private var displayedOffset: CGFloat {
-        if position.isBottom {
+        switch position {
+        case .bottom:
             return presenterContentRect.height - sheetContentRect.height
+        case .center:
+            return -presenterContentRect.midY + screenHeight / 2
+        case .centerAnchoredBottom:
+            let centerOffset = -presenterContentRect.midY + screenHeight / 2
+            guard centerAnchoredInitialHeight > 0 else {
+                return centerOffset
+            }
+            return centerOffset + (centerAnchoredInitialHeight / 2 - sheetContentRect.height / 2)
+        case .top:
+            return -presenterContentRect.midY + screenHeight / 2
         }
-        return -presenterContentRect.midY + screenHeight / 2
     }
 
     private var hiddenOffset: CGFloat {
@@ -95,6 +113,15 @@ public struct CustomPopup<PopupContent>: ViewModifier where PopupContent: View {
                 .frameGetter($presenterContentRect)
         }
         .overlay(sheet())
+        .onChange(of: isPresented) { _, newValue in
+            if newValue {
+                DispatchQueue.main.async {
+                    centerAnchoredInitialHeight = sheetContentRect.height
+                }
+            } else {
+                centerAnchoredInitialHeight = 0
+            }
+        }
     }
 
     private func sheet() -> some View {
