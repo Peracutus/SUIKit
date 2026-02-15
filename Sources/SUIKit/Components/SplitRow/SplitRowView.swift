@@ -84,33 +84,25 @@ public struct SplitRowView: View {
         }
     }
 
-    /// Правая область (сумма + чекмарк): в read-only режиме тап переключает isPaid
+    /// Правая область: checkmark слева от суммы. Тап только для редактирования суммы (amountEditable)
     @ViewBuilder
     private func rightPart(config: ParticipantRowConfig) -> some View {
-        let rightAreaTappable = !config.amountEditable && config.onTogglePaid != nil
-        let rightContent = HStack(spacing: SplitRowLayout.amountCheckmarkSpacing) {
+        HStack(spacing: SplitRowLayout.amountCheckmarkSpacing) {
+            if config.showPaidCheckbox {
+                checkmarkView(config: config)
+            }
             if let amountText = config.amountText {
                 amountView(config: config, amountText: amountText)
             }
-            if config.showPaidCheckbox {
-                checkmarkView(config: config, embeddedInRightAreaTap: rightAreaTappable)
-            }
-        }
-        .contentShape(Rectangle())
-
-        if rightAreaTappable, let onTogglePaid = config.onTogglePaid {
-            Button(action: onTogglePaid) { rightContent }
-                .buttonStyle(.plain)
-        } else {
-            rightContent
         }
     }
 
+    /// Checkmark (галочка или пустой круг). Не таппл, toggle — только через SwipeAction.
     @ViewBuilder
-    private func checkmarkView(config: ParticipantRowConfig, embeddedInRightAreaTap: Bool = false) -> some View {
+    private func checkmarkView(config: ParticipantRowConfig) -> some View {
         let size = SplitRowLayout.checkmarkSize
         let isPaid = config.paid
-        let mark = Group {
+        Group {
             if isPaid {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: size))
@@ -123,15 +115,6 @@ public struct SplitRowView: View {
         }
         .frame(width: size, height: size)
         .animation(.easeInOut(duration: 0.25), value: config.paid)
-
-        if config.onTogglePaid != nil, !embeddedInRightAreaTap {
-            Button(action: { config.onTogglePaid?() }) {
-                mark
-            }
-            .buttonStyle(.plain)
-        } else {
-            mark
-        }
     }
 
     @ViewBuilder
