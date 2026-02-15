@@ -71,6 +71,9 @@ public struct SwipeableParticipantRow<Content: View>: View {
                             swipeActionIcon("trash")
                         } background: { _ in
                             SwipeableColors.deleteBackground
+                                .cornerRadius(32)
+                                .padding(.vertical)
+                                
                         }
 
                         SwipeAction(action: {
@@ -82,7 +85,9 @@ public struct SwipeableParticipantRow<Content: View>: View {
                                 isCheckmark: !paid
                             )
                         } background: { _ in
-                            paid ? SwipeableColors.undoPaidBackground : SwipeableColors.markPaidBackground
+                            (paid ? SwipeableColors.undoPaidBackground : SwipeableColors.markPaidBackground)
+                                .cornerRadius(32)
+                                .padding(.vertical)
                         }
                         .allowSwipeToTrigger()
                     } else {
@@ -97,13 +102,13 @@ public struct SwipeableParticipantRow<Content: View>: View {
                         .allowSwipeToTrigger()
                     }
                 }
-                .swipeActionWidth(64)
+                .swipeActionWidth(32)
                 .swipeSpacing(14)
                 .swipeActionCornerRadius(12)
-                .swipeActionsVisibleStartPoint(20)
+                .swipeActionsVisibleStartPoint(5)
                 .swipeActionsMaskCornerRadius(12)
-                .swipeReadyToTriggerPadding(50)
-                .swipeMinimumPointToTrigger(150)
+                .swipeReadyToTriggerPadding(64)
+                .swipeMinimumPointToTrigger(100)
             } else {
                 content()
                     .contentShape(Rectangle())
