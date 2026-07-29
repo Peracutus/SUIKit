@@ -44,9 +44,12 @@ public struct IconBox: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
                 .animation(.easeInOut(duration: 0.3), value: color)
             
-            Image(systemName: icon)
+            Image.categoryIcon(named: icon)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: iconSize, height: iconSize)
                 .foregroundColor(color)
-                .font(.system(size: iconSize))
                 .id(icon) // Для отслеживания изменений иконки
                 .transition(.opacity.combined(with: .scale(scale: 0.8)))
                 .animation(.easeInOut(duration: 0.3), value: icon)
@@ -71,4 +74,3 @@ public struct IconBox: View {
     }
     .padding()
 }
-

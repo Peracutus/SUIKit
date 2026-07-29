@@ -105,7 +105,7 @@ public struct SwipeableParticipantRow<Content: View>: View {
                 .swipeActionWidth(32)
                 .swipeSpacing(14)
                 .swipeActionCornerRadius(12)
-                .swipeActionsVisibleStartPoint(5)
+                .swipeActionsVisibleStartPoint(0)
                 .swipeActionsMaskCornerRadius(12)
                 .swipeReadyToTriggerPadding(64)
                 .swipeMinimumPointToTrigger(100)

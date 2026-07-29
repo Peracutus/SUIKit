@@ -38,6 +38,7 @@ public struct TransactionRowModel: Identifiable, Equatable {
         lhs.title == rhs.title &&
         lhs.subtitle == rhs.subtitle &&
         lhs.amount == rhs.amount &&
+        lhs.iconName == rhs.iconName &&
         lhs.isRegular == rhs.isRegular &&
         lhs.isSplit == rhs.isSplit &&
         lhs.splitStatus == rhs.splitStatus &&
@@ -81,4 +82,3 @@ public enum SplitStatus: Equatable {
     case pending
     case completed
 }
-

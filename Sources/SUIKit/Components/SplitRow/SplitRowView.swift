@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Constants
 
-private enum SplitRowLayout {
+    private enum SplitRowLayout {
     static let participantHeight: CGFloat = 64
     static let groupHeight: CGFloat = 80
     static let avatarSizeParticipant: CGFloat = 40
@@ -20,6 +20,7 @@ private enum SplitRowLayout {
     static let maxVisibleAvatars = 4
     static let checkmarkSize: CGFloat = 18
     static let amountCheckmarkSpacing: CGFloat = 15
+    static let amountWidth: CGFloat = 88
     static let leadingPadding: CGFloat = 16
     /// Отступ от правого края карточки до checkmark
     static let trailingPadding: CGFloat = 26
@@ -102,7 +103,7 @@ public struct SplitRowView: View {
     private func checkmarkView(config: ParticipantRowConfig) -> some View {
         let size = SplitRowLayout.checkmarkSize
         let isPaid = config.paid
-        Group {
+        let checkmark = Group {
             if isPaid {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: size))
@@ -114,7 +115,19 @@ public struct SplitRowView: View {
             }
         }
         .frame(width: size, height: size)
-        .animation(.easeInOut(duration: 0.25), value: config.paid)
+
+        if let onTogglePaid = config.onTogglePaid {
+            Button(action: onTogglePaid) {
+                checkmark
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(isPaid ? "Оплачено" : "Не оплачено")
+            .accessibilityValue(isPaid ? "Да" : "Нет")
+        } else {
+            checkmark
+        }
     }
 
     @ViewBuilder
@@ -146,6 +159,8 @@ public struct SplitRowView: View {
                     .font(.system(size: 14, weight: .regular))
                     .multilineTextAlignment(.trailing)
                     .keyboardType(.decimalPad)
+                    .lineLimit(1)
+                    .frame(width: SplitRowLayout.amountWidth)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color(hex: "#6E77DD") ?? .purple, lineWidth: 1)
@@ -156,7 +171,10 @@ public struct SplitRowView: View {
                     .font(.system(size: 14, weight: .regular))
                     .foregroundColor(config.amountColor ?? .primary)
                     .strikethrough(config.amountColor == nil && (config.paid || config.amountStrikethrough))
-                    .animation(.easeInOut(duration: 0.25), value: config.paid)
+                    .frame(width: SplitRowLayout.amountWidth, alignment: .trailing)
+                    .transaction { transaction in
+                        transaction.animation = nil
+                    }
                 if config.amountEditable, config.onAmountTap != nil {
                     amountLabel.onTapGesture { config.onAmountTap?() }
                 } else {
@@ -164,7 +182,7 @@ public struct SplitRowView: View {
                 }
             }
         }
-        .frame(minWidth: 60)
+        .frame(width: SplitRowLayout.amountWidth, alignment: .trailing)
     }
 
     // MARK: - Group Row (80pt)
