@@ -8,33 +8,27 @@
 import SwiftUI
 
 public struct CustomTabBar: View {
-
-    let tabs: [String]
-    @Binding var selectedIndex: Int
-    let action: (() -> Void)?
-
-    private let height: CGFloat = 100
+    @Binding private var selectedTab: AppTab
+    private let onAddTapped: () -> Void
 
     public init(
-        tabs: [String],
-        selectedIndex: Binding<Int>,
-        action: (() -> Void)? = nil
+        selectedTab: Binding<AppTab>,
+        onAddTapped: @escaping () -> Void
     ) {
-        self.tabs = tabs
-        self._selectedIndex = selectedIndex
-        self.action = action
+        self._selectedTab = selectedTab
+        self.onAddTapped = onAddTapped
     }
 
     public var body: some View {
-        VStack {
-            Spacer()
-            TabBottomView(
-                tabbarItems: tabs,
-                selectedIndex: $selectedIndex,
-                action: action
-            )
-            .frame(height: height)
+        GeometryReader { _ in
+            VStack {
+                Spacer()
+                TabBottomView(
+                    selectedTab: $selectedTab,
+                    onAddTapped: onAddTapped
+                )
+            }
         }
-        .ignoresSafeArea(.all, edges: .bottom)
+        .ignoresSafeArea(.container, edges: .bottom)
     }
 }

@@ -39,7 +39,8 @@ public struct CategoryFormRowView: View {
             
             HStack(alignment: .center, spacing: 5) {
                 
-                Image(image)
+                Image.categoryIcon(named: image)
+                    .renderingMode(.template)
                     .setupCategoryImageModifier(color)
                 
                 VStack {
@@ -78,7 +79,7 @@ public struct CategoryFormRowView: View {
 struct CategoryFormRowView_Previews: PreviewProvider {
     
     static var previews: some View {
-        CategoryFormRowView(title: "Eating out", count: "₽ 2 000 000", transaction: "25 transactions", percent: "40%", image: "FoodOut", color: .skyBlue.opacity(0.6))
+        CategoryFormRowView(title: "Eating out", count: "₽ 2 000 000", transaction: "25 transactions", percent: "40%", image: "ShoppingCart", color: .skyBlue.opacity(0.6))
     }
     
 }

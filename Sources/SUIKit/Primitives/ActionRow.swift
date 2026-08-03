@@ -77,6 +77,8 @@ public struct ActionRow: View {
     
     public var body: some View {
         HStack(spacing: spacing) {
+            Spacer()
+            
             ForEach(items) { item in
                 if let custom = item.customView {
                     Button(action: item.action) {
@@ -99,8 +101,6 @@ public struct ActionRow: View {
                     .accessibilityLabel(Text(item.accessibilityLabel))
                 }
             }
-            
-            Spacer()
         }
         .padding(.horizontal)
     }

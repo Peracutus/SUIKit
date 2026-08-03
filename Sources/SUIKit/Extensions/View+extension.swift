@@ -72,8 +72,8 @@ public extension View {
     }
     
     /// Добавляет отступ снизу для таббара (safeArea)
-    /// Высота таббара: 100pt по умолчанию
-    func tabBarSafeArea(height: CGFloat = 100) -> some View {
+    /// Высота таббара: 83pt по умолчанию
+    func tabBarSafeArea(height: CGFloat = 83) -> some View {
         self
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 // Прозрачный отступ для таббара

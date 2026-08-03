@@ -91,6 +91,11 @@ public extension Color {
     static let catBrown = Color.brown.opacity(0.6)
     static let catTeal = Color.teal.opacity(0.6)
     
+    static let success = Color(hex: "#2BBD8F") ?? Color.green
+    static let error = Color.red
+    static let warning = Color.orange
+    static let cardBackground = Color.white
+    
     func toHex() -> String? {
         let uic = UIColor(self)
         guard let components = uic.cgColor.components, components.count >= 3 else {
