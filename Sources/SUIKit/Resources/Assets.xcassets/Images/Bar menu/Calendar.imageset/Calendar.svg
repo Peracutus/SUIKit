@@ -1,7 +1,7 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Icon / Calendar">
-<path id="Vector" d="M20.5333 6.41667H7.46667C5.92027 6.41667 4.66667 7.67027 4.66667 9.21667V19.95C4.66667 21.4964 5.92027 22.75 7.46667 22.75H20.5333C22.0797 22.75 23.3333 21.4964 23.3333 19.95V9.21667C23.3333 7.67027 22.0797 6.41667 20.5333 6.41667Z" stroke="#A4A6A9" stroke-width="2.21667"/>
-<path id="Vector_2" d="M9.33333 4.43333V8.4M18.6667 4.43333V8.4M4.66667 10.7333H23.3333" stroke="#A4A6A9" stroke-width="2.21667" stroke-linecap="round"/>
-<path id="Vector_3" d="M9.33333 14.2333H9.45M14 14.2333H14.1167M18.6667 14.2333H18.7833M9.33333 18.3167H9.45M14 18.3167H14.1167M18.6667 18.3167H18.7833" stroke="#A4A6A9" stroke-width="2.68333" stroke-linecap="round"/>
+<path id="Vector" d="M24.5333 6.62866H7.46667C5.44688 6.62866 3.80952 8.26602 3.80952 10.2858V24.3049C3.80952 26.3246 5.44688 27.962 7.46667 27.962H24.5333C26.5531 27.962 28.1905 26.3246 28.1905 24.3049V10.2858C28.1905 8.26602 26.5531 6.62866 24.5333 6.62866Z" stroke="#A4A6A9" stroke-width="2"/>
+<path id="Vector_2" d="M9.90476 4.03809V9.21904M22.0952 4.03809V9.21904M3.80952 12.2667H28.1905" stroke="#A4A6A9" stroke-width="2" stroke-linecap="round"/>
+<path id="Vector_3" d="M9.90475 16.8381H10.0571M16 16.8381H16.1524M22.0952 16.8381H22.2476M9.90475 22.1715H10.0571M16 22.1715H16.1524M22.0952 22.1715H22.2476" stroke="#A4A6A9" stroke-width="2" stroke-linecap="round"/>
 </g>
 </svg>
