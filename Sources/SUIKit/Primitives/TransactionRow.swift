@@ -28,7 +28,7 @@ public struct TransactionRow: View, Equatable {
                         .fill(model.iconColor.opacity(0.15))
                         .frame(width: 44, height: 44)
                     
-                    Image.categoryIcon(named: model.iconName)
+                    model.iconName.image
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()

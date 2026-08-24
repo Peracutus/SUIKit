@@ -24,7 +24,7 @@ public struct TransactionRowModel: Identifiable, Equatable {
     public let title: String
     public let subtitle: String?
     public let amount: String
-    public let iconName: String
+    public let iconName: CategoryIcon
     public let iconColor: Color
     public let transactionType: TransactionRowType
     public let isRegular: Bool
@@ -50,7 +50,7 @@ public struct TransactionRowModel: Identifiable, Equatable {
         title: String,
         subtitle: String? = nil,
         amount: String,
-        iconName: String,
+        iconName: CategoryIcon,
         iconColor: Color,
         transactionType: TransactionRowType,
         isRegular: Bool = false,
