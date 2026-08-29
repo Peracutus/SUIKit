@@ -26,17 +26,16 @@ public enum SettingsIcon: Sendable {
 
     fileprivate var requiresBorderedBadge: Bool {
         switch self {
-        case .terms, .faceID, .faq, .feedback:
+        case .language, .currency, .categories, .notifications,
+             .terms, .faceID, .faq, .feedback:
             true
-        case .language, .currency, .categories, .notifications:
-            false
         }
     }
 
-    /// The icon rendered with the colors authored in the asset.
+    /// The icon rendered as a template so Settings can apply its single accent color.
     public var image: Image {
         Image(assetName, bundle: .module)
-            .renderingMode(.original)
+            .renderingMode(.template)
     }
 }
 
@@ -55,6 +54,7 @@ struct SettingsIconBadge: View {
         icon.image
             .resizable()
             .scaledToFit()
+            .foregroundStyle(Self.accent)
             .frame(width: 24, height: 24)
             .frame(width: size, height: size)
             .background(Color(uiColor: .systemBackground), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
@@ -69,4 +69,6 @@ struct SettingsIconBadge: View {
             }
             .accessibilityHidden(true)
     }
+
+    private static let accent = Color(red: 110 / 255, green: 119 / 255, blue: 221 / 255)
 }
