@@ -1,4 +1,5 @@
 import SwiftUI
+import SwipeActions
 
 public struct TransactionRow: View, Equatable {
     public let model: TransactionRowModel
@@ -21,6 +22,38 @@ public struct TransactionRow: View, Equatable {
     }
     
     public var body: some View {
+        Group {
+            if let onDelete {
+                SwipeView {
+                    rowContent
+                        .contentShape(Rectangle())
+                } trailingActions: { context in
+                    SwipeAction(action: {
+                        onDelete(model.id)
+                        context.state.wrappedValue = .closed
+                    }) { _ in
+                        Image(systemName: "trash")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .accessibilityLabel("Удалить")
+                    } background: { _ in
+                        Color.red
+                    }
+                    .allowSwipeToTrigger()
+                }
+                .swipeActionWidth(72)
+                .swipeSpacing(12)
+                .swipeActionCornerRadius(12)
+                .swipeActionsVisibleStartPoint(0)
+                .swipeReadyToTriggerPadding(64)
+                .swipeMinimumPointToTrigger(100)
+            } else {
+                rowContent
+            }
+        }
+    }
+
+    private var rowContent: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
                 ZStack {
