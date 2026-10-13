@@ -8,6 +8,9 @@ enum PeriodSelectorStyle {
     static let secondaryText = Color(hex: "#667085") ?? .secondary
     static let border = Color(hex: "#E5E7EB") ?? .gray.opacity(0.2)
     static let controlBackground = Color(hex: "#F0F0F5") ?? .gray.opacity(0.1)
+    static let menuBackground = Color.white
+    static let menuText = Color(hex: "#111827") ?? .primary
+    static let menuShadow = (Color(hex: "#010E47") ?? .black).opacity(0.15)
 }
 
 enum PeriodSelectorText {

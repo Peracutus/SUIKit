@@ -18,6 +18,9 @@ struct PeriodPickerSheet: View {
     @State private var rangeDraft: PeriodRangeDraft
     @State private var showsYearPicker = false
     @State private var yearCandidate: Date
+    @State private var measuredContentHeight: CGFloat?
+    @State private var measuredFooterHeight: CGFloat?
+    @State private var isExpandedToLarge = false
 
     init(
         selection: PeriodSelection,
@@ -80,6 +83,12 @@ struct PeriodPickerSheet: View {
             .padding(.horizontal, 20)
             .padding(.top, 24)
             .padding(.bottom, 20)
+            .fixedSize(horizontal: false, vertical: true)
+            .background {
+                GeometryReader { proxy in
+                    Color.clear.preference(key: PeriodPickerContentHeightKey.self, value: proxy.size.height)
+                }
+            }
         }
         .safeAreaInset(edge: .bottom) {
             Button(PeriodSelectorText.apply(locale), action: apply)
@@ -99,10 +108,19 @@ struct PeriodPickerSheet: View {
                         Rectangle().fill(.regularMaterial)
                     }
                 }
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear.preference(key: PeriodPickerFooterHeightKey.self, value: proxy.size.height)
+                    }
+                }
         }
         .background(Color(uiColor: .systemBackground))
         .environment(\.locale, locale)
         .environment(\.calendar, calendar)
+        .onPreferenceChange(PeriodPickerContentHeightKey.self) { measuredContentHeight = $0 }
+        .onPreferenceChange(PeriodPickerFooterHeightKey.self) { measuredFooterHeight = $0 }
+        .presentationDetents([.height(sheetContentHeight), .large], selection: pickerDetent)
+        .presentationDragIndicator(.visible)
         .onChange(of: mode) { oldMode, newMode in
             if oldMode == .month && newMode == .range {
                 rangeDraft = PeriodRangeDraft()
@@ -284,6 +302,29 @@ struct PeriodPickerSheet: View {
         }
     }
 
+    private var sheetContentHeight: CGFloat {
+        let contentHeight = measuredContentHeight ?? estimatedContentHeight
+        let footerHeight = measuredFooterHeight ?? 70
+        return ceil(contentHeight + footerHeight)
+    }
+
+    private var estimatedContentHeight: CGFloat {
+        switch mode {
+        case .month:
+            return 434
+        case .range:
+            let rows = CGFloat(calendarCellCount / 7)
+            return 224 + 32 + rows * 44 + 44 + 60
+        }
+    }
+
+    private var pickerDetent: Binding<PresentationDetent> {
+        Binding(
+            get: { isExpandedToLarge ? .large : .height(sheetContentHeight) },
+            set: { isExpandedToLarge = ($0 == .large) }
+        )
+    }
+
     private func apply() {
         guard let proposedSelection else { return }
         onApply(proposedSelection)
@@ -328,4 +369,14 @@ struct PeriodPickerSheet: View {
         return formatter.string(from: date).capitalized(with: locale)
     }
 
+}
+
+private struct PeriodPickerContentHeightKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
+}
+
+private struct PeriodPickerFooterHeightKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
 }

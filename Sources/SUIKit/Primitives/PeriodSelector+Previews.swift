@@ -39,6 +39,17 @@ struct PeriodSelector_Previews: PreviewProvider {
         Group {
             PeriodSelectorPreviewHost()
                 .previewDisplayName("Period Selector")
+            PeriodSelectorDropdownMenu(
+                selection: .currentMonth,
+                referenceDate: .now,
+                calendar: Calendar(identifier: .gregorian),
+                locale: Locale(identifier: "ru_RU"),
+                onPreset: { _ in },
+                onChoosePeriod: {}
+            )
+            .frame(width: 248)
+            .padding(24)
+            .previewDisplayName("Period Menu")
             PeriodPickerSheet(
                 selection: .currentMonth,
                 referenceDate: .now,
