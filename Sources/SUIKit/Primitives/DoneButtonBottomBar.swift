@@ -50,11 +50,11 @@ public struct DoneButtonBottomBar: View {
             Button(action: action) {
                 Text(title)
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(isEnabled ? SemanticColors.onAccent : SemanticColors.disabledText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, presentation == .standard ? 14 : 0)
                     .frame(height: floatingButtonHeight)
-                    .background((Color(hex: "#6E77DD") ?? .purple).opacity(isEnabled ? 1 : 0.45))
+                    .background(isEnabled ? SemanticColors.accent : SemanticColors.disabledFill)
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             }
             .disabled(!isEnabled)
@@ -65,8 +65,8 @@ public struct DoneButtonBottomBar: View {
                     Text(secondaryTitle)
                         .font(.body.weight(.semibold))
                         .frame(maxWidth: .infinity, minHeight: 48)
-                        .foregroundStyle(Color(hex: "#6E77DD") ?? .purple)
-                        .background((Color(hex: "#6E77DD") ?? .purple).opacity(0.06), in: Capsule())
+                        .foregroundStyle(SemanticColors.selectedText)
+                        .background(SemanticColors.selectedFill, in: Capsule())
                 }
                 .padding(.horizontal, horizontalPadding)
                 .padding(.top, 8)
@@ -124,7 +124,7 @@ public struct DoneButtonBottomBar: View {
     private var bottomBarBackground: some View {
         switch presentation {
         case .standard:
-            Color(.systemGroupedBackground)
+            SemanticColors.footer
         case .floating:
             UnevenRoundedRectangle(
                 topLeadingRadius: 24,
@@ -133,7 +133,7 @@ public struct DoneButtonBottomBar: View {
                 topTrailingRadius: 24,
                 style: .continuous
             )
-            .fill(.ultraThinMaterial)
+            .fill(SemanticColors.footer)
         case .barePill:
             Color.clear
         }

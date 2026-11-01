@@ -94,7 +94,7 @@ public extension Color {
     static let success = Color(hex: "#2BBD8F") ?? Color.green
     static let error = Color.red
     static let warning = Color.orange
-    static let cardBackground = Color.white
+    static let cardBackground = SemanticColors.card
     
     func toHex() -> String? {
         let uic = UIColor(self)
