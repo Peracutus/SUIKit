@@ -23,6 +23,22 @@ final class TransactionRowSwipeTests: XCTestCase {
         XCTAssertEqual(resolve(x: 80, y: 10, predictedX: 80, wasRevealed: true), .closed)
     }
 
+    func testFastShortHorizontalDragCanRevealButCannotDelete() {
+        XCTAssertEqual(TransactionRowSwipeOutcome.resolveHorizontal(translation: -20, velocity: -2000, origin: 0), .revealed)
+    }
+
+    func testLongHorizontalDragDeletesOnlyAfterActualTravel() {
+        XCTAssertEqual(TransactionRowSwipeOutcome.resolveHorizontal(translation: -145, velocity: 0, origin: 0), .delete)
+    }
+
+    func testReverseHorizontalDragClosesPreviouslyRevealedRow() {
+        XCTAssertEqual(TransactionRowSwipeOutcome.resolveHorizontal(translation: 80, velocity: 0, origin: -72), .closed)
+    }
+
+    func testShortHorizontalDragSettlesBackToClosed() {
+        XCTAssertEqual(TransactionRowSwipeOutcome.resolveHorizontal(translation: -20, velocity: 0, origin: 0), .closed)
+    }
+
     private func resolve(
         x: Double, y: Double, predictedX: Double, wasRevealed: Bool = false
     ) -> TransactionRowSwipeOutcome {
