@@ -72,6 +72,35 @@ public struct TransactionRowModel: Identifiable, Equatable {
         self.splitStatus = splitStatus
         self.splitParticipants = splitParticipants
     }
+
+    @available(*, deprecated, message: "Use a CategoryIcon rather than an asset-name String")
+    public init(
+        id: UUID,
+        title: String,
+        subtitle: String? = nil,
+        amount: String,
+        iconName: String,
+        iconColor: Color,
+        transactionType: TransactionRowType,
+        isRegular: Bool = false,
+        isSplit: Bool = false,
+        splitStatus: SplitStatus? = nil,
+        splitParticipants: [SplitParticipantModel]? = nil
+    ) {
+        self.init(
+            id: id,
+            title: title,
+            subtitle: subtitle,
+            amount: amount,
+            iconName: CategoryIcon(rawValue: iconName) ?? .fallback,
+            iconColor: iconColor,
+            transactionType: transactionType,
+            isRegular: isRegular,
+            isSplit: isSplit,
+            splitStatus: splitStatus,
+            splitParticipants: splitParticipants
+        )
+    }
 }
 
 public enum TransactionRowType: Equatable {
