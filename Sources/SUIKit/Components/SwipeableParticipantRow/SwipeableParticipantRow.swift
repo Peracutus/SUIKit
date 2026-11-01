@@ -10,8 +10,8 @@ import SwipeActions
 
 /// Цвета для свайп-действий
 private enum SwipeableColors {
-    static let swipeZoneBackground = Color(hex: "#F5F5F9") ?? Color(uiColor: .systemGray6)
-    static let deleteBackground = Color(hex: "#DE4D5D") ?? .red
+    static let swipeZoneBackground = SemanticColors.card
+    static let deleteBackground = SemanticColors.destructive
     /// Зелёный — поставить отметку о выполнении (paid = false)
     static let markPaidBackground = Color(hex: "#87BD00") ?? .green
     /// Оранжевый — убрать отметку (paid = true)
@@ -28,7 +28,7 @@ private func swipeActionIcon(_ name: String, isCheckmark: Bool = false) -> some 
 
 /// Цвет фона зоны свайпа (#F5F5F9) для применения на контейнере строк
 public enum SwipeableParticipantRowStyle {
-    public static let swipeZoneBackgroundColor = Color(hex: "#F5F5F9") ?? Color(uiColor: .systemGray6)
+    public static let swipeZoneBackgroundColor = SemanticColors.card
 }
 
 /// Обёртка контента строки в SwipeView с trailing actions (удаление, опционально — отметка возврата долга)

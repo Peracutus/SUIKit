@@ -65,10 +65,10 @@ struct TabBottomView: View {
         .frame(height: 83)
         .background {
             RoundedRectangle(cornerRadius: 34, style: .continuous)
-                .fill(Color.white)
+                .fill(SemanticColors.card)
                 .overlay {
                     RoundedRectangle(cornerRadius: 34, style: .continuous)
-                        .stroke(Color(hex: "#D9D9D9") ?? Color(uiColor: .systemGray5), lineWidth: 1)
+                        .stroke(SemanticColors.separator, lineWidth: 1)
                 }
                 .shadow(color: (Color(hex: "#171B2A") ?? .black).opacity(0.14), radius: 18, y: 8)
         }
@@ -88,12 +88,12 @@ private struct AddActionButton: View {
         Button(action: action) {
             PlusIcon()
                 .stroke(style: StrokeStyle(lineWidth: 2.3, lineCap: .round))
-                .foregroundStyle(.white)
+                .foregroundStyle(SemanticColors.onAccent)
                 .frame(width: 14, height: 14)
                 .frame(width: 44, height: 44)
                 .background {
                     Circle()
-                        .fill(Color(hex: "#6570E6") ?? .indigo)
+                        .fill(SemanticColors.accent)
                 }
                 .scaleEffect(isPressed ? 72.0 / 44.0 : 1.0)
         }
