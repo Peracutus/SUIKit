@@ -93,6 +93,12 @@ public struct BudgetCardView: View {
 
     private func transitionBody(progress rawProgress: CGFloat) -> some View {
         let progress = min(max(rawProgress, 0), 1)
+        let surface = UnevenRoundedRectangle(
+            topLeadingRadius: 16 * progress,
+            bottomLeadingRadius: 16,
+            bottomTrailingRadius: 16,
+            topTrailingRadius: 16 * progress
+        )
         return GeometryReader { geometry in
             ZStack(alignment: .bottom) {
                 BudgetCardView(
@@ -155,7 +161,17 @@ public struct BudgetCardView: View {
                     }
                 }
             }
-            .clipped()
+            // Crossfade content only. One opaque surface owns the corners and
+            // border throughout the transition, including the status-bar area.
+            .background(Color(uiColor: .systemBackground), in: surface)
+            .clipShape(surface)
+            .overlay {
+                BudgetCardCollapseUpperBorder(progress: progress)
+                    .stroke(BudgetCardStyle.border, lineWidth: 1)
+                    .opacity(progress)
+                BudgetCardBottomBorder(radius: 15.5)
+                    .stroke(BudgetCardStyle.border, lineWidth: 1)
+            }
         }
     }
 
@@ -234,8 +250,18 @@ public struct BudgetCardView: View {
         }
         .padding(18)
         .frame(maxWidth: .infinity, minHeight: 214, alignment: .topLeading)
-        .background(Color(uiColor: .systemBackground), in: .rect(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(BudgetCardStyle.border, lineWidth: 1))
+        .background {
+            if !transitionPlaceholder {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color(uiColor: .systemBackground))
+            }
+        }
+        .overlay {
+            if !transitionPlaceholder {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(BudgetCardStyle.border, lineWidth: 1)
+            }
+        }
     }
 
     private var collapsedBody: some View {
@@ -268,13 +294,17 @@ public struct BudgetCardView: View {
         .padding(.vertical, 12)
         .frame(maxWidth: .infinity, minHeight: 80)
         .background {
-            UnevenRoundedRectangle(bottomLeadingRadius: 16, bottomTrailingRadius: 16)
-                .fill(Color(uiColor: .systemBackground))
-                .shadow(color: .black.opacity(0.04), radius: 3, y: 2)
+            if !transitionPlaceholder {
+                UnevenRoundedRectangle(bottomLeadingRadius: 16, bottomTrailingRadius: 16)
+                    .fill(Color(uiColor: .systemBackground))
+                    .shadow(color: .black.opacity(0.04), radius: 3, y: 2)
+            }
         }
         .overlay {
-            BudgetCardBottomBorder(radius: 16)
-                .stroke(BudgetCardStyle.border, lineWidth: 1)
+            if !transitionPlaceholder {
+                BudgetCardBottomBorder(radius: 16)
+                    .stroke(BudgetCardStyle.border, lineWidth: 1)
+            }
         }
     }
 
