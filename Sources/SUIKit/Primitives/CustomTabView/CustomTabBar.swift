@@ -10,13 +10,16 @@ import SwiftUI
 public struct CustomTabBar: View {
     @Binding private var selectedTab: AppTab
     private let onAddTapped: () -> Void
+    private let onTabSelected: (AppTab) -> Void
 
     public init(
         selectedTab: Binding<AppTab>,
-        onAddTapped: @escaping () -> Void
+        onAddTapped: @escaping () -> Void,
+        onTabSelected: @escaping (AppTab) -> Void = { _ in }
     ) {
         self._selectedTab = selectedTab
         self.onAddTapped = onAddTapped
+        self.onTabSelected = onTabSelected
     }
 
     public var body: some View {
@@ -25,7 +28,8 @@ public struct CustomTabBar: View {
                 Spacer()
                 TabBottomView(
                     selectedTab: $selectedTab,
-                    onAddTapped: onAddTapped
+                    onAddTapped: onAddTapped,
+                    onTabSelected: onTabSelected
                 )
             }
         }

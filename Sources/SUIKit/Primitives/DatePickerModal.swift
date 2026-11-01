@@ -18,6 +18,7 @@ public struct DatePickerModal: View {
     @Binding var selectedDate: Date
     let title: String
     let displayedComponents: DatePickerComponents
+    let maximumDate: Date?
     
     // MARK: - Constants
     
@@ -52,12 +53,14 @@ public struct DatePickerModal: View {
         isPresented: Binding<Bool>,
         selectedDate: Binding<Date>,
         title: String = "Готово",
-        displayedComponents: DatePickerComponents = [.date, .hourAndMinute]
+        displayedComponents: DatePickerComponents = [.date, .hourAndMinute],
+        maximumDate: Date? = nil
     ) {
         self._isPresented = isPresented
         self._selectedDate = selectedDate
         self.title = title
         self.displayedComponents = displayedComponents
+        self.maximumDate = maximumDate
     }
     
     // MARK: - Body
@@ -102,11 +105,22 @@ public struct DatePickerModal: View {
                 .padding(.top, Layout.headerTopPadding)
             
             // Основной DatePicker
-            DatePicker(
-                "",
-                selection: $selectedDate,
-                displayedComponents: displayedComponents
-            )
+            Group {
+                if let maximumDate {
+                    DatePicker(
+                        "",
+                        selection: $selectedDate,
+                        in: ...maximumDate,
+                        displayedComponents: displayedComponents
+                    )
+                } else {
+                    DatePicker(
+                        "",
+                        selection: $selectedDate,
+                        displayedComponents: displayedComponents
+                    )
+                }
+            }
             .datePickerStyle(.wheel)
             .labelsHidden()
             .frame(maxWidth: .infinity)

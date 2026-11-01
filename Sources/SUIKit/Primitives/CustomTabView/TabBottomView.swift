@@ -10,13 +10,16 @@ import SwiftUI
 struct TabBottomView: View {
     @Binding private var selectedTab: AppTab
     private let onAddTapped: () -> Void
+    private let onTabSelected: (AppTab) -> Void
 
     public init(
         selectedTab: Binding<AppTab>,
-        onAddTapped: @escaping () -> Void
+        onAddTapped: @escaping () -> Void,
+        onTabSelected: @escaping (AppTab) -> Void = { _ in }
     ) {
         self._selectedTab = selectedTab
         self.onAddTapped = onAddTapped
+        self.onTabSelected = onTabSelected
     }
 
     public var body: some View {
@@ -24,7 +27,7 @@ struct TabBottomView: View {
             TabItemView(
                 tab: .wallet,
                 isSelected: selectedTab == .wallet,
-                action: { selectedTab = .wallet }
+                action: { select(.wallet) }
             )
 
             Spacer(minLength: 0)
@@ -32,7 +35,7 @@ struct TabBottomView: View {
             TabItemView(
                 tab: .stats,
                 isSelected: selectedTab == .stats,
-                action: { selectedTab = .stats }
+                action: { select(.stats) }
             )
 
             Spacer(minLength: 0)
@@ -44,7 +47,7 @@ struct TabBottomView: View {
             TabItemView(
                 tab: .calendar,
                 isSelected: selectedTab == .calendar,
-                action: { selectedTab = .calendar }
+                action: { select(.calendar) }
             )
 
             Spacer(minLength: 0)
@@ -52,7 +55,7 @@ struct TabBottomView: View {
             TabItemView(
                 tab: .settings,
                 isSelected: selectedTab == .settings,
-                action: { selectedTab = .settings }
+                action: { select(.settings) }
             )
         }
         .padding(.horizontal, 24)
@@ -69,6 +72,11 @@ struct TabBottomView: View {
                 }
                 .shadow(color: (Color(hex: "#171B2A") ?? .black).opacity(0.14), radius: 18, y: 8)
         }
+    }
+
+    private func select(_ tab: AppTab) {
+        selectedTab = tab
+        onTabSelected(tab)
     }
 }
 

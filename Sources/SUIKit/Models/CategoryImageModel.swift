@@ -9,13 +9,13 @@ import SwiftUI
 
 public struct CategoryImageModel: Codable, Hashable, Identifiable {
     public var id: UUID
-    public var icon: String
+    public var icon: CategoryIcon
     public var iconColor: String
     public var categoryTitle: String
     
     public init(
         id: UUID = UUID(),
-        icon: String = "",
+        icon: CategoryIcon = .fallback,
         iconColor: String = "",
         categoryTitle: String = ""
     ) {
