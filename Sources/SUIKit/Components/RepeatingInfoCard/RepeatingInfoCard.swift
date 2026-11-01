@@ -46,15 +46,15 @@ public struct RepeatingInfoCard: View {
         self.emptyText = emptyText
     }
 
-    private static let indexCircleColor = Color(hex: "#E4E4FB") ?? Color.purple.opacity(0.2)
-    private static let indexTextColor = Color(hex: "#6E77DD") ?? .purple
+    private static let indexCircleColor = SemanticColors.selectedFill
+    private static let indexTextColor = SemanticColors.selectedText
 
     public var body: some View {
         PrimaryCard(useOptimizedShadow: true) {
             VStack(alignment: .leading) {
                 CardHeaderTitle(
                     iconName: "repeat",
-                    iconColor: .white,
+                    iconColor: SemanticColors.onAccent,
                     title: title,
                     subtitle: subtitle ?? ""
                 )

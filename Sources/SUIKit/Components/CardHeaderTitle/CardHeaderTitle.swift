@@ -19,9 +19,9 @@ public struct CardHeaderTitle: View {
     enum CardHeaderTitleLayout {
         static let iconCircleSize: CGFloat = 30
         static let iconFontSize: CGFloat = 14
-        static let primaryColor = Color(hex: "#6E77DD") ?? .purple
-        static let buttonBackgroundColor = Color(hex: "#E4E4FB") ?? .purple.opacity(0.2)
-        static public let subtitleColor = Color(hex: "#AAAAAA") ?? .gray
+        static let primaryColor = SemanticColors.accent
+        static let buttonBackgroundColor = SemanticColors.selectedFill
+        static public let subtitleColor = SemanticColors.secondaryText
         static let titleFontSize: CGFloat = 16
         static let subtitleFontSize: CGFloat = 12
     }
@@ -36,10 +36,10 @@ public struct CardHeaderTitle: View {
 
     public init(
         iconName: String,
-        iconColor: Color = .white,
+        iconColor: Color = SemanticColors.onAccent,
         title: String,
         subtitle: String,
-        subtitleColor: Color = Color(hex: "#AAAAAA") ?? .gray,
+        subtitleColor: Color = SemanticColors.secondaryText,
         onShare: (() -> Void)? = nil,
         onEdit: (() -> Void)? = nil
     ) {
@@ -66,7 +66,7 @@ public struct CardHeaderTitle: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.custom("Manrope-SemiBold", size: CardHeaderTitleLayout.titleFontSize))
-                    .foregroundColor(.primary)
+                    .foregroundColor(SemanticColors.primaryText)
                 Text(subtitle)
                     .font(.system(size: CardHeaderTitleLayout.subtitleFontSize, weight: .regular))
                     .foregroundColor(subtitleColor)
@@ -93,7 +93,7 @@ public struct CardHeaderTitle: View {
                     .frame(width: CardHeaderTitleLayout.iconCircleSize, height: CardHeaderTitleLayout.iconCircleSize)
                 Image(systemName: iconName)
                     .font(.system(size: CardHeaderTitleLayout.iconFontSize))
-                    .foregroundColor(CardHeaderTitleLayout.primaryColor)
+                    .foregroundColor(SemanticColors.selectedText)
             }
         }
         .buttonStyle(.plain)

@@ -58,7 +58,7 @@ public struct SplitRowView: View {
         .frame(height: SplitRowLayout.participantHeight)
         .padding(.leading, isCardPresentation ? SplitRowLayout.leadingPadding : 0)
         .padding(.trailing, isCardPresentation ? SplitRowLayout.trailingPadding : 0)
-        .background(Color.white)
+        .background(SemanticColors.card)
         .modifier(ConditionalCardPresentationModifier(isActive: isCardPresentation))
     }
 
@@ -107,7 +107,7 @@ public struct SplitRowView: View {
             if isPaid {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: size))
-                    .foregroundColor(.green)
+                    .foregroundColor(SemanticColors.income)
             } else {
                 Circle()
                     .stroke(SplitRowLayout.activeColor, lineWidth: 1)
@@ -212,7 +212,7 @@ public struct SplitRowView: View {
         .frame(height: SplitRowLayout.groupHeight)
         .padding(.leading, isCardPresentation ? SplitRowLayout.leadingPadding : 0)
         .padding(.trailing, isCardPresentation ? SplitRowLayout.trailingPadding : 0)
-        .background(Color.white)
+        .background(SemanticColors.card)
         .modifier(ConditionalCardPresentationModifier(isActive: isCardPresentation))
         .overlay(
             RoundedRectangle(cornerRadius: isCardPresentation ? AppRadius.medium : 0)
@@ -234,7 +234,7 @@ public struct SplitRowView: View {
                 )
                 .overlay(
                     Circle()
-                        .stroke(Color.white, lineWidth: 2)
+                        .stroke(SemanticColors.card, lineWidth: 2)
                 )
             }
 
@@ -249,7 +249,7 @@ public struct SplitRowView: View {
                 .frame(width: SplitRowLayout.participantCircleSize, height: SplitRowLayout.participantCircleSize)
                 .overlay(
                     Circle()
-                        .stroke(Color.white, lineWidth: 2)
+                        .stroke(SemanticColors.card, lineWidth: 2)
                 )
             }
         }

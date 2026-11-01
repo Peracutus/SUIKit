@@ -11,7 +11,6 @@ struct PeriodPickerSheet: View {
     let onApply: (PeriodSelection) -> Void
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @State private var mode: Mode
     @State private var selectedMonth: Date
     @State private var displayedMonth: Date
@@ -93,28 +92,23 @@ struct PeriodPickerSheet: View {
         .safeAreaInset(edge: .bottom) {
             Button(PeriodSelectorText.apply(locale), action: apply)
                 .font(.headline)
-                .foregroundStyle(.white)
+                .foregroundStyle(proposedSelection == nil ? SemanticColors.disabledText : SemanticColors.onAccent)
                 .frame(maxWidth: .infinity, minHeight: 50)
-                .background(PeriodSelectorStyle.accent, in: .rect(cornerRadius: 14))
+                .background(proposedSelection == nil ? SemanticColors.disabledFill : PeriodSelectorStyle.accent, in: .rect(cornerRadius: 14))
                 .disabled(proposedSelection == nil)
-                .opacity(proposedSelection == nil ? 0.5 : 1)
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
                 .padding(.bottom, 8)
-                .background {
-                    if reduceTransparency {
-                        Color(uiColor: .systemBackground)
-                    } else {
-                        Rectangle().fill(.regularMaterial)
-                    }
-                }
+                .background(SemanticColors.footer)
                 .background {
                     GeometryReader { proxy in
                         Color.clear.preference(key: PeriodPickerFooterHeightKey.self, value: proxy.size.height)
                     }
                 }
         }
-        .background(Color(uiColor: .systemBackground))
+        .background(SemanticColors.sheet)
+        .foregroundStyle(SemanticColors.primaryText)
+        .presentationBackground(SemanticColors.sheet)
         .environment(\.locale, locale)
         .environment(\.calendar, calendar)
         .onPreferenceChange(PeriodPickerContentHeightKey.self) { measuredContentHeight = $0 }
@@ -185,7 +179,7 @@ struct PeriodPickerSheet: View {
                             .minimumScaleFactor(0.8)
                             .foregroundStyle(isSelected ? PeriodSelectorStyle.capsuleForeground : PeriodSelectorStyle.secondaryText)
                             .frame(maxWidth: .infinity, minHeight: 44)
-                            .background(isSelected ? PeriodSelectorStyle.capsuleBackground : Color(uiColor: .systemBackground), in: .rect(cornerRadius: 12))
+                            .background(isSelected ? PeriodSelectorStyle.capsuleBackground : SemanticColors.sheet, in: .rect(cornerRadius: 12))
                             .overlay(RoundedRectangle(cornerRadius: 12).stroke(isSelected ? PeriodSelectorStyle.accent : PeriodSelectorStyle.border))
                     }
                     .buttonStyle(.plain)
@@ -211,6 +205,8 @@ struct PeriodPickerSheet: View {
             .tint(PeriodSelectorStyle.accent)
         }
         .padding(20)
+        .background(SemanticColors.sheet)
+        .presentationBackground(SemanticColors.sheet)
         .presentationDetents([.medium])
     }
 
@@ -238,7 +234,7 @@ struct PeriodPickerSheet: View {
             }
         }
         .padding(16)
-        .background(Color(uiColor: .systemBackground), in: .rect(cornerRadius: 16))
+        .background(SemanticColors.sheet, in: .rect(cornerRadius: 16))
         .overlay(RoundedRectangle(cornerRadius: 16).stroke(PeriodSelectorStyle.border))
     }
 
@@ -269,7 +265,7 @@ struct PeriodPickerSheet: View {
         } label: {
             Text(String(day))
                 .font(.system(.caption))
-                .foregroundStyle(isBoundary ? .white : isInside ? PeriodSelectorStyle.capsuleForeground : isCurrentMonth ? Color.primary : PeriodSelectorStyle.secondaryText.opacity(0.65))
+                .foregroundStyle(isBoundary ? SemanticColors.onAccent : isInside ? PeriodSelectorStyle.capsuleForeground : isCurrentMonth ? Color.primary : PeriodSelectorStyle.secondaryText.opacity(0.65))
                 .frame(maxWidth: .infinity, minHeight: 40)
                 .background(isBoundary ? PeriodSelectorStyle.accent : isInside ? PeriodSelectorStyle.capsuleBackground : .clear, in: .rect(cornerRadius: 6))
                 .contentShape(Rectangle())

@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct PrimaryCard<Content: View>: View {
+    @Environment(\.colorSchemeContrast) private var contrast
     private let content: Content
     private let cornerRadius: CGFloat
     private let padding: CGFloat
@@ -21,8 +22,13 @@ public struct PrimaryCard<Content: View>: View {
     public var body: some View {
         content
             .padding(padding)
-            .background(Color.cardBackground)
+            .background(SemanticColors.card)
             .cornerRadius(cornerRadius)
+            .overlay {
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(contrast == .increased ? SemanticColors.separator : .clear, lineWidth: 1)
+                    .allowsHitTesting(false)
+            }
             .modifier(ShadowModifier(useOptimized: useOptimizedShadow))
     }
 }
@@ -38,4 +44,3 @@ private struct ShadowModifier: ViewModifier {
         }
     }
 }
-
