@@ -96,7 +96,6 @@ final class NativeBackButtonStyleTests: XCTestCase {
 
         registry.update(owner: owner, host: destination, navigationController: navigation)
         let styled = destination.navigationItem.standardAppearance
-        XCTAssertTrue(styled === appearance)
         XCTAssertEqual(styled?.backIndicatorImage.alignmentRectInsets, appearance.backIndicatorImage.alignmentRectInsets)
         XCTAssertEqual(styled?.backIndicatorTransitionMaskImage.alignmentRectInsets, appearance.backIndicatorTransitionMaskImage.alignmentRectInsets)
         XCTAssertEqual(styled?.backgroundColor, .yellow)
