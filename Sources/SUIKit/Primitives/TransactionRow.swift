@@ -58,15 +58,20 @@ public struct TransactionRow: View, Equatable {
                 swipeOffset = min(0, max(-160, origin + value.translation.width))
             }
             .onEnded { value in
-                guard onDelete != nil,
-                      abs(value.translation.width) > abs(value.translation.height) * 1.25 else { return }
-                let projected = (isDeleteRevealed ? -72 : 0) + value.predictedEndTranslation.width
-                if projected <= -145 {
+                guard onDelete != nil else { return }
+                switch TransactionRowSwipeOutcome.resolve(
+                    translation: value.translation,
+                    predictedEndTranslation: value.predictedEndTranslation,
+                    wasRevealed: isDeleteRevealed
+                ) {
+                case .delete:
                     closeSwipe()
                     onDelete?(model.id)
-                } else {
-                    isDeleteRevealed = projected <= -48
-                    animateSwipe { swipeOffset = isDeleteRevealed ? -72 : 0 }
+                case .closed:
+                    closeSwipe()
+                case .revealed:
+                    isDeleteRevealed = true
+                    animateSwipe { swipeOffset = -72 }
                 }
             }
     }
