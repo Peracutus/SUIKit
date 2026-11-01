@@ -137,9 +137,15 @@ public struct TransactionRow: View, Equatable {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityDescription)
-        .accessibilityAddTraits(.isButton)
-        .accessibilityAction(named: "Открыть детали") { onTransactionTap?(model.id) }
-        .accessibilityAction(named: "Удалить") { onDelete?(model.id) }
+        .accessibilityAddTraits(onTransactionTap != nil ? .isButton : [])
+        .accessibilityActions {
+            if let onTransactionTap {
+                Button("Открыть детали") { onTransactionTap(model.id) }
+            }
+            if let onDelete {
+                Button("Удалить", role: .destructive) { onDelete(model.id) }
+            }
+        }
     }
 
     private func marker(_ symbol: String) -> some View {

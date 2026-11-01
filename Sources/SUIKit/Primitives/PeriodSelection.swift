@@ -32,7 +32,9 @@ public enum PeriodSelection: Hashable, Sendable {
         case .currentYear:
             return Self.yearTitle(calendar.component(.year, from: referenceDate), locale: locale)
         case let .month(year, month):
-            guard let date = calendar.date(from: DateComponents(year: year, month: month, day: 1)) else { return "" }
+            guard (1...12).contains(month),
+                  let date = calendar.date(from: DateComponents(year: year, month: month, day: 1))
+            else { return "" }
             return Self.monthTitle(for: date, referenceDate: referenceDate, calendar: calendar, locale: locale)
         case let .range(start, endExclusive):
             guard let lastDay = calendar.date(byAdding: .day, value: -1, to: endExclusive), start <= lastDay else { return "" }
