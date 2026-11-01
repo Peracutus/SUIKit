@@ -8,7 +8,6 @@ final class NativeBackButtonStyleRegistry {
 
     private struct Owner {
         let modeItems: Set<ObjectIdentifier>
-        let appearanceItem: ObjectIdentifier?
     }
 
     @MainActor
@@ -30,9 +29,7 @@ final class NativeBackButtonStyleRegistry {
 
     private var owners: [UUID: Owner] = [:]
     private var modes: [ObjectIdentifier: ModeLease] = [:]
-    private var appearances: [ObjectIdentifier: NativeBackButtonAppearance] = [:]
-
-    func update(owner: UUID, host: UIViewController, navigationController: UINavigationController, tint: UIColor) {
+    func update(owner: UUID, host: UIViewController, navigationController: UINavigationController) {
         guard let index = navigationController.viewControllers.firstIndex(where: { $0 === host }) else { return }
         let item = host.navigationItem
         var items = [item]
@@ -40,12 +37,8 @@ final class NativeBackButtonStyleRegistry {
             items.append(navigationController.viewControllers[index - 1].navigationItem)
         }
         let desiredModes = Set(items.map(ObjectIdentifier.init))
-        let desiredAppearance = index > 0 ? ObjectIdentifier(item) : nil
         if let old = owners[owner] {
             releaseModes(old.modeItems.subtracting(desiredModes), owner: owner)
-            if old.appearanceItem != desiredAppearance, let oldAppearance = old.appearanceItem {
-                releaseAppearance(oldAppearance, owner: owner)
-            }
         }
 
         for item in items {
@@ -57,21 +50,14 @@ final class NativeBackButtonStyleRegistry {
                 item.backButtonDisplayMode = .minimal
             }
         }
-        if let id = desiredAppearance {
-            let appearance = appearances[id] ?? NativeBackButtonAppearance(item: item)
-            appearance.owners.insert(owner)
-            appearances[id] = appearance
-            appearance.apply(tint: tint, navigationBar: navigationController.navigationBar)
-        }
-        owners[owner] = Owner(modeItems: desiredModes, appearanceItem: desiredAppearance)
+        // UIKit owns the indicator and its Liquid Glass geometry. Only hide the
+        // previous destination's title; do not clone or offset its image/mask.
+        owners[owner] = Owner(modeItems: desiredModes)
     }
 
     func release(owner: UUID) {
         guard let old = owners.removeValue(forKey: owner) else { return }
         releaseModes(old.modeItems, owner: owner)
-        if let id = old.appearanceItem {
-            releaseAppearance(id, owner: owner)
-        }
     }
 
     private func releaseModes(_ ids: Set<ObjectIdentifier>, owner: UUID) {
@@ -85,12 +71,4 @@ final class NativeBackButtonStyleRegistry {
         }
     }
 
-    private func releaseAppearance(_ id: ObjectIdentifier, owner: UUID) {
-        guard let appearance = appearances[id] else { return }
-        appearance.owners.remove(owner)
-        if appearance.owners.isEmpty {
-            appearance.restore()
-            appearances.removeValue(forKey: id)
-        }
-    }
 }
