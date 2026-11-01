@@ -39,6 +39,8 @@ public struct TransactionRowModel: Identifiable, Equatable {
         lhs.subtitle == rhs.subtitle &&
         lhs.amount == rhs.amount &&
         lhs.iconName == rhs.iconName &&
+        lhs.iconColor == rhs.iconColor &&
+        lhs.transactionType == rhs.transactionType &&
         lhs.isRegular == rhs.isRegular &&
         lhs.isSplit == rhs.isSplit &&
         lhs.splitStatus == rhs.splitStatus &&
