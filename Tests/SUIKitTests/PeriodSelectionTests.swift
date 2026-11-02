@@ -33,6 +33,16 @@ final class PeriodSelectionTests: XCTestCase {
         XCTAssertNil(PeriodSelection.month(year: 2025, month: 13).interval(referenceDate: date(2026, 10, 4), calendar: calendar))
     }
 
+    func testInvalidManualMonthHasNoIntervalOrDisplayedTitle() {
+        let referenceDate = date(2026, 10, 4)
+        let locale = Locale(identifier: "ru_RU")
+        for month in [0, 13] {
+            let selection = PeriodSelection.month(year: 2025, month: month)
+            XCTAssertNil(selection.interval(referenceDate: referenceDate, calendar: calendar))
+            XCTAssertEqual(selection.capsuleTitle(referenceDate: referenceDate, calendar: calendar, locale: locale), "")
+        }
+    }
+
     func testRussianCapsuleLabels() {
         let now = date(2026, 10, 4)
         let locale = Locale(identifier: "ru_RU")
