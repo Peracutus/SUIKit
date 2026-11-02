@@ -2,15 +2,15 @@ import SwiftUI
 
 /// Semantic colors for the period controls, based on the Open Money design system.
 enum PeriodSelectorStyle {
-    static let accent = Color(hex: "#6E77DD") ?? .indigo
-    static let capsuleBackground = Color(hex: "#F0EFFB") ?? .indigo.opacity(0.09)
-    static let capsuleForeground = Color(hex: "#5551A4") ?? .indigo
-    static let secondaryText = Color(hex: "#667085") ?? .secondary
-    static let border = Color(hex: "#E5E7EB") ?? .gray.opacity(0.2)
-    static let controlBackground = Color(hex: "#F0F0F5") ?? .gray.opacity(0.1)
-    static let menuBackground = Color.white
-    static let menuText = Color(hex: "#111827") ?? .primary
-    static let menuShadow = (Color(hex: "#010E47") ?? .black).opacity(0.15)
+    static let accent = SemanticColors.accent
+    static let capsuleBackground = SemanticColors.selectedFill
+    static let capsuleForeground = SemanticColors.selectedText
+    static let secondaryText = SemanticColors.secondaryText
+    static let border = SemanticColors.separator
+    static let controlBackground = SemanticColors.controlFill
+    static let menuBackground = SemanticColors.sheet
+    static let menuText = SemanticColors.primaryText
+    static let menuShadow = Color.black.opacity(0.15)
 }
 
 enum PeriodSelectorText {

@@ -9,6 +9,7 @@ public struct TransactionRow: View, Equatable {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var swipeOffset: CGFloat = 0
     @State private var isDeleteRevealed = false
+    @State private var swipeStartOffset: CGFloat?
 
     public init(
         model: TransactionRowModel,
@@ -44,25 +45,23 @@ public struct TransactionRow: View, Equatable {
                 .frame(maxWidth: .infinity)
                 .background(DashboardListStyle.card)
                 .offset(x: swipeOffset)
-                .simultaneousGesture(horizontalSwipe)
+                .gesture(horizontalSwipe)
         }
         .frame(minHeight: 68)
     }
 
-    private var horizontalSwipe: some Gesture {
-        DragGesture(minimumDistance: 16)
-            .onChanged { value in
-                guard onDelete != nil,
-                      abs(value.translation.width) > abs(value.translation.height) * 1.25 else { return }
-                let origin: CGFloat = isDeleteRevealed ? -72 : 0
-                swipeOffset = min(0, max(-160, origin + value.translation.width))
-            }
-            .onEnded { value in
-                guard onDelete != nil else { return }
-                switch TransactionRowSwipeOutcome.resolve(
-                    translation: value.translation,
-                    predictedEndTranslation: value.predictedEndTranslation,
-                    wasRevealed: isDeleteRevealed
+    private var horizontalSwipe: HorizontalRowSwipeGesture {
+        HorizontalRowSwipeGesture(
+            isEnabled: onDelete != nil,
+            onChanged: { translation in
+                if swipeStartOffset == nil { swipeStartOffset = isDeleteRevealed ? -72 : 0 }
+                swipeOffset = min(0, max(-160, (swipeStartOffset ?? 0) + translation))
+            },
+            onEnded: { translation, velocity in
+                let origin = swipeStartOffset ?? (isDeleteRevealed ? -72 : 0)
+                swipeStartOffset = nil
+                switch TransactionRowSwipeOutcome.resolveHorizontal(
+                    translation: translation, velocity: velocity, origin: origin
                 ) {
                 case .delete:
                     closeSwipe()
@@ -73,11 +72,17 @@ public struct TransactionRow: View, Equatable {
                     isDeleteRevealed = true
                     animateSwipe { swipeOffset = -72 }
                 }
+            },
+            onCancelled: {
+                swipeStartOffset = nil
+                animateSwipe { swipeOffset = isDeleteRevealed ? -72 : 0 }
             }
+        )
     }
 
     private func closeSwipe() {
         isDeleteRevealed = false
+        swipeStartOffset = nil
         animateSwipe { swipeOffset = 0 }
     }
 

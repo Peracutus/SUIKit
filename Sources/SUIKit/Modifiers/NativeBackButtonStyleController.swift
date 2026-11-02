@@ -2,13 +2,11 @@ import UIKit
 
 @MainActor
 final class NativeBackButtonStyleController: UIViewController {
-    var tint: UIColor
     private let ownerID = UUID()
     private var isStopped = false
     private weak var configuredNavigationController: UINavigationController?
 
-    init(tint: UIColor) {
-        self.tint = tint
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -43,8 +41,7 @@ final class NativeBackButtonStyleController: UIViewController {
         NativeBackButtonStyleRegistry.shared.update(
             owner: ownerID,
             host: context.host,
-            navigationController: context.navigationController,
-            tint: tint
+            navigationController: context.navigationController
         )
     }
 

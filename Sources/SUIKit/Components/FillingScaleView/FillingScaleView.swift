@@ -10,8 +10,8 @@ import SwiftUI
 // MARK: - Constants
 
 private enum FillingScaleLayout {
-    static let filledColor = Color(hex: "#87BD00") ?? .green
-    static let unfilledColor = Color(hex: "#ACACAC")?.opacity(0.15) ?? .gray.opacity(0.15)
+    static let filledColor = SemanticColors.income
+    static let unfilledColor = SemanticColors.controlFill
     static let barHeight: CGFloat = 8
     static let labelFontSize: CGFloat = 12
 }
@@ -74,7 +74,7 @@ public struct FillingScaleView: View {
 
             Text("\(formatAmount(debtAmount)) долг")
                 .font(.system(size: FillingScaleLayout.labelFontSize, weight: .regular))
-                .foregroundColor(.gray)
+                .foregroundColor(SemanticColors.secondaryText)
         }
     }
 }
