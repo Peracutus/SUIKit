@@ -34,14 +34,14 @@ struct TabItemView: View {
     }
 
     private var activeIconColor: Color {
-        Color(hex: "#6875E0") ?? .indigo
+        SemanticColors.selectedText
     }
 
     private var inactiveIconColor: Color {
-        Color(uiColor: .systemGray2)
+        SemanticColors.secondaryText
     }
 
     private var activeBackgroundColor: Color {
-        (Color(hex: "#635BFF") ?? .indigo).opacity(0.12)
+        SemanticColors.selectedFill
     }
 }

@@ -24,15 +24,21 @@ public struct AvatarView: View {
     let content: AvatarContent
     let colorHex: String
     let size: CGFloat
+    let backgroundOpacity: Double
+    let foregroundColor: Color?
 
     public init(
         content: AvatarContent,
         colorHex: String,
-        size: CGFloat
+        size: CGFloat,
+        backgroundOpacity: Double = 0.15,
+        foregroundColor: Color? = nil
     ) {
         self.content = content
         self.colorHex = colorHex
         self.size = size
+        self.backgroundOpacity = backgroundOpacity
+        self.foregroundColor = foregroundColor
     }
 
     private var displayText: String {
@@ -52,7 +58,7 @@ public struct AvatarView: View {
     public var body: some View {
         ZStack {
             Circle()
-                .fill((Color(hex: colorHex) ?? .purple).opacity(0.15))
+                .fill((Color(hex: colorHex) ?? .purple).opacity(backgroundOpacity))
 
             Text(displayText)
                 .font(
@@ -60,7 +66,7 @@ public struct AvatarView: View {
                         ? .system(size: size * 0.5, weight: .regular)
                         : .system(size: size * 0.4, weight: .semibold)
                 )
-                .foregroundColor(Color(hex: colorHex) ?? .purple)
+                .foregroundStyle(foregroundColor ?? (Color(hex: colorHex) ?? .purple))
         }
         .frame(width: size, height: size)
     }
